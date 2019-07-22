@@ -23,7 +23,19 @@ while running:
     if event.type == pygame.QUIT: 
       running = False 
 
+
+  keys = pygame.key.get_pressed() 
+  if keys[pygame.K_LEFT]: 
+    x -= velocity
+  if keys[pygame.K_RIGHT]: 
+    x += velocity
+  if keys[pygame.K_UP]: 
+    y -= velocity 
+  if keys[pygame.K_DOWN]: 
+    y += velocity
+
+  win.fill((0,0,0)) #makes screen all black before drawing the rectangle again
   pygame.draw.rect(win, (255, 0, 0), (x, y, charWidth, charHeight))
-  pygame.display.update()
+  pygame.display.update() 
 
 pygame.quit()
