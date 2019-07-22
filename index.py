@@ -23,4 +23,7 @@ while running:
     if event.type == pygame.QUIT: 
       running = False 
 
+  pygame.draw.rect(win, (255, 0, 0), (x, y, charWidth, charHeight))
+  pygame.display.update()
+
 pygame.quit()
