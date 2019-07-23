@@ -1,23 +1,16 @@
 import pygame 
+from characters import characters
 pygame.init() 
 
 
 displayWidth = 500
 displayHeight = 500
-win = pygame.display.set_mode((displayWidth, displayHeight))
-
+window = pygame.display.set_mode((displayWidth, displayHeight)) #creates display surface
 pygame.display.set_caption('Pygame') 
 
-player = {
-  'x': 50, 
-  'y': 50,
-  'width': 40,
-  'height': 60, 
-  'vel': 20 
-}
-
-running = True 
-
+def drawCharacter(character): 
+  pygame.draw.rect(window, (255, 0, 0), (character['x'], character['y'], character['width'], character['height']))
+  
 def preventMovementOffScreen(character): 
   if character['x'] < 0: 
     character['x'] = 0 
@@ -28,9 +21,8 @@ def preventMovementOffScreen(character):
   if character['y'] > displayHeight - character['height']: 
     character['y'] = displayHeight - character['height']
 
-def drawCharacter(character): 
-  pygame.draw.rect(win, (255, 0, 0), (character['x'], character['y'], character['width'], character['height']))
 
+running = True 
 while running: 
   pygame.time.delay(100) #milliseconds 
 
@@ -38,6 +30,7 @@ while running:
     if event.type == pygame.QUIT: 
       running = False 
 
+  player = characters['player']
   keys = pygame.key.get_pressed() 
   if keys[pygame.K_LEFT]: 
     player['x'] -= player['vel']
@@ -48,10 +41,12 @@ while running:
   if keys[pygame.K_DOWN]: 
     player['y'] += player['vel']
 
-  preventMovementOffScreen(player)
+  window.fill((0,0,0)) #makes screen all black before drawing characters
 
-  win.fill((0,0,0)) #makes screen all black before drawing the rectangle again
-  drawCharacter(player)
+  for character in characters: 
+    preventMovementOffScreen(characters[character])
+    drawCharacter(characters[character])
+
   pygame.display.update() 
 
 pygame.quit()
